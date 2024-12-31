@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project PC</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 1rem;
+            color: #555;
+            line-height: 1.5;
+            text-align: center;
+            max-width: 700px;
+            margin-bottom: 20px;
+        }
+
+        .lab-info {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #333;
+            text-align: center;
+        }
+
+        .lab-info a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .lab-info a:hover {
+            text-decoration: underline;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 20px;
+        }
+
+        .custom-button {
+            text-align: center;
+            background-color: #007bff;
+            color: white;
+            padding: 15px 20px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 300px;
+        }
+
+        .custom-button:hover {
+            background-color: #0056b3;
+        }
+
+        .custom-button span {
+            display: block;
+            line-height: 1.5;
+        }
+
+        .custom-button span:first-child {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Project PC</h1>
+    <p>
+        Project PC investigates innovative methods for generating point clouds (PC) as the foundation for shapes and CAD models. Points, represented as Cartesian coordinates, are considered the "DNA" of any shape. The project focuses on practical, human-in-the-loop approaches that minimize computational burden, eliminate dependency on commercial tools, and emphasize human creativity over black-box methods. These efforts aim to simplify the creation of point clouds and facilitate their use in CAD modeling and reverse engineering.
+    </p>
+    <p>
+        This ongoing research is being conducted by the<br> <strong>Advanced Manufacturing Engineering Laboratory, Kitami Institute of Technology, Japan</strong><br> (北見工業大学 生産加工システム研究室). <br>For more details, visit our lab's website: 
+        <a href="https://www.kit-amel.jp/" target="_blank">https://www.kit-amel.jp/</a>.
+    </p>
+
+    <div class="button-container">
+        <button class="custom-button" onclick="openPage('system-A.html')">
+            <span>Project PC - System-A</span>
+            <span>Interactive Shape-Wise Point Cloud Generator</span>
+        </button>
+        <button class="custom-button" onclick="openPage('system-B.html')">
+            <span>Project PC - System-B</span>
+            <span>Interactive Path and Point Cloud Generator</span>
+        </button>
+    </div>
+
+    <script>
+        function openPage(url) {
+            window.open(url, '_blank');
+        }
+    </script>
+</body>
+</html>

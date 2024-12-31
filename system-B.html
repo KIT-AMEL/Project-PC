@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project PC - System-B</title>
+  <style>
+    canvas {
+      border: 1px solid black;
+      display: block;
+      margin: 20px auto;
+    }
+    #controls {
+      text-align: center;
+      margin-top: 10px;
+    }
+    button {
+      margin: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h3>Interactive Path and Point Cloud Generator</h3>
+  <input type="file" id="imageLoader" accept="image/*">
+  <canvas id="canvas" width="800" height="600"></canvas>
+  <div id="controls">
+    <button id="selectMode" disabled>Point Selection</button>
+    <button id="adjustMode" disabled>Adjust</button>
+    <button id="generatePoints" disabled>Generate Points</button>
+    <button id="clearPoints" disabled>Clear Points</button>
+    <button id="export" disabled>Export Points</button>
+  </div>
+  <script src="js/script-system-B.js"></script>
+</body>
+</html>

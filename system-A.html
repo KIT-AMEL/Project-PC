@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project PC - System-A</title>
+    <style>
+        /* Keep all existing CSS rules as they are */
+        #container {
+            display: flex;
+        }
+        #image-container {
+            width: 50%;
+            height: 700px;
+            border: 1px solid #ccc;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+            color: gray;
+            overflow: hidden;
+        }
+        #image {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            display: none;
+        }
+        .point {
+            width: 8px;
+            height: 8px;
+            background-color: red;
+            position: absolute;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+        #controls {
+            width: 50%;
+            padding: 10px;
+        }
+        #file-input {
+            margin-top: 10px;
+        }
+        #points-list {
+            list-style-type: none;
+            padding: 0;
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            margin-top: 10px;
+        }
+        .point-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .icon-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        #grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            display: none; /* Initially hidden */
+        }
+        .grid-line {
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.2); /* Light grid line color */
+        }
+        .horizontal-line {
+            height: 1px;
+            width: 100%;
+        }
+        .vertical-line {
+            width: 1px;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h3>Interactive Shape-Wise Point Cloud Generator</h3>
+    <div id="container">
+        <div id="image-container">
+            <span id="no-image-message">Load an image to begin!</span>
+            <img id="image" alt="Selected Image" />
+        </div>
+        <div id="controls">
+            <h3>Select Shape</h3>
+            <select id="shape-selector">
+                <option value="">Select a shape</option>
+                <option value="freeform">Free Form (any number of points)</option>
+                <option value="triangle">Triangle (3 points)</option>
+                <option value="quadrilateral">Quadrilateral (4 points)</option>
+                <option value="pentagon">Pentagon (5 points)</option>
+                <option value="hexagon">Hexagon (6 points)</option>
+                <option value="heptagon">Heptagon (7 points)</option>
+                <option value="octagon">Octagon (8 points)</option>
+                <option value="nonagon">Nonagon (9 points)</option>
+                <option value="decagon">Decagon (10 points)</option>
+                <option value="circle">Circle (3 points on diameter)</option>
+                <option value="arc">Half Circle / Arc (3 points: center, start, end)</option>
+                <option value="major-arc">Major Arc (3 points: center, start, end)</option>
+                <option value="ellipse">Ellipse (3 points: center, end-points on horizontal and vertical axes)</option>
+            </select>
+            <h3>Points</h3>
+            <ul id="points-list"></ul>
+            <button onclick="deleteAllPoints()">Delete All Points</button>
+            <button onclick="exportPoints()">Export All Points (CSV)</button>
+            <button onclick="exportForOpenSCAD()">Export for OpenSCAD (TXT)</button>
+        </div>
+    </div>
+
+    <label for="file-input" style="cursor: pointer; padding: 5px 10px; background-color: #007bff; color: white; border-radius: 4px; margin-top: 10px; display: inline-block;">
+        Load Image
+    </label>
+    <input type="file" id="file-input" accept="image/*" style="display: none;" />
+
+    <label for="show-grid" style="cursor: pointer; margin-left: 10px;">
+        <input type="checkbox" id="show-grid" onclick="toggleGrid()"> Show Grid
+    </label>
+
+    <!-- Link to the external JS file -->
+    <script src="js/script-system-A.js"></script>
+</body>
+</html>
