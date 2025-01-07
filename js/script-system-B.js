@@ -14,6 +14,14 @@ document.addEventListener('DOMContentLoaded', () => {
     let draggingPointIndex = null;
     let mode = ''; // Modes: 'select', 'adjust', 'generate'
 
+    // Dynamically create canvas and position it over the image
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.style.position = 'absolute';
+    canvas.style.top = '0';
+    canvas.style.left = '0';
+    imageContainer.appendChild(canvas);
+
     // Load and display the image
     imageLoader.addEventListener('change', (event) => {
         const file = event.target.files[0];
@@ -24,21 +32,19 @@ document.addEventListener('DOMContentLoaded', () => {
             image.src = e.target.result;
             image.style.display = 'block';
             noImageMessage.style.display = 'none';
-
-            image.onload = () => {
-                canvas.width = image.naturalWidth;
-                canvas.height = image.naturalHeight;
-                ctx.drawImage(image, 0, 0);
-                selectModeButton.disabled = false;
-            };
         };
         reader.readAsDataURL(file);
-    });
 
-    // Create canvas inside the image container
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-    imageContainer.appendChild(canvas);
+        image.onload = () => {
+            // Adjust canvas size to match the image
+            canvas.width = image.naturalWidth;
+            canvas.height = image.naturalHeight;
+            canvas.style.width = `${image.width}px`;
+            canvas.style.height = `${image.height}px`;
+            redraw();
+            selectModeButton.disabled = false;
+        };
+    });
 
     // Point Selection Mode
     selectModeButton.addEventListener('click', () => {
