@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Multi-Curve Point Cloud Generator</title>
+  <style>
+    canvas {
+      border: 1px solid black;
+      display: block;
+      margin: 20px auto;
+    }
+    #controls {
+      text-align: center;
+      margin-top: 10px;
+    }
+    button, input {
+      margin: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h3 style="text-align: center;">Interactive Multi-Set Path and Point Cloud Generator</h3>
+  <div id="settings" style="text-align: center;">
+    <input type="file" id="imageLoader" accept="image/*">
+    <label for="numPointClouds">Number of Point Clouds: </label>
+    <input type="number" id="numPointClouds" min="1" value="1">
+    <button id="startButton">Start</button>
+  </div>
+  <canvas id="canvas" width="800" height="600"></canvas>
+  <div id="controls">
+    <button id="selectMode" disabled>Select Points</button>
+    <button id="adjustMode" disabled>Adjust Points</button>
+    <label for="numDensePoints">Points per Curve:</label>
+    <input type="number" id="numDensePoints" min="10" value="100" disabled>
+    <button id="generatePoints" disabled>Generate Points</button>
+    <button id="doneSet" disabled>Finalize Set</button>
+    <button id="clearPoints" disabled>Clear Points</button>
+    <button id="showAllSets" disabled>Show All Sets</button>
+    <button id="exportAll" disabled>Export All Point Clouds</button>
+  </div>
+  <script src="js/script-system-E.js"></script>
+</body>
+</html>
