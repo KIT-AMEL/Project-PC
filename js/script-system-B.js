@@ -115,23 +115,28 @@ document.addEventListener('DOMContentLoaded', () => {
       ctx.drawImage(img, imgOffsetX, imgOffsetY, img.width * imgScale, img.height * imgScale);
 
       drawPoints();
-      drawBezierCurve();
+      //drawBezierCurve();
     }
 
     // Draw all points
     function drawPoints() {
-      points.forEach((point, index) => {
+      if (points.length > 1) {
+        // Draw a line connecting all points
         ctx.beginPath();
-
-        // Highlight dominant points
-        if (index === 0 || index === points.length - 1 || isDominantPoint(index)) {
-          ctx.fillStyle = 'yellow'; // Dominant points
-          ctx.arc(point.x, point.y, 7, 0, Math.PI * 2);
-        } else {
-          ctx.fillStyle = 'red'; // Regular points
-          ctx.arc(point.x, point.y, 5, 0, Math.PI * 2);
+        ctx.moveTo(points[0].x, points[0].y); // Start at the first point
+        for (let i = 1; i < points.length; i++) {
+          ctx.lineTo(points[i].x, points[i].y); // Connect to the next point
         }
-
+        ctx.strokeStyle = 'red';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+      }
+    
+      // Draw each point as a red circle
+      points.forEach((point) => {
+        ctx.beginPath();
+        ctx.arc(point.x, point.y, 5, 0, Math.PI * 2);
+        ctx.fillStyle = 'red';
         ctx.fill();
       });
     }
