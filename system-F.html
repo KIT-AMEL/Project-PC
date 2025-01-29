@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project PC - System-F</title>
+  <script src="js/plotly-2.24.1.min.js" charset="utf-8"></script>
+  <style>
+    #plot {
+      width: 800px;
+      height: 600px;
+      margin: 20px auto;
+      border: 1px solid black;
+    }
+    #sample, #controls, #mirroring, #rotating, #translating, #scaling, #explanations {
+      text-align: center;
+      margin: 10px auto;
+    }
+    input, button, select {
+      margin: 5px;
+    }
+    h4 {
+      text-align: center;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h3 style="text-align: center;">Point Cloud Visualizer and Transformer</h3>
+
+  <div id="sample">    
+    <input type="file" id="fileInput" accept=".csv">
+    <label>
+        <a href="js/sample.csv" download="sample.csv">Download Sample CSV File</a>
+    </label>
+  </div>
+
+  <div id="controls">
+    <label for="plotType">Select Plot Type: </label>
+    <select id="plotType" disabled>
+      <option value="scatter">Scatter</option>
+      <option value="line">Line</option>
+      <option value="lineWithMarkers">Line with Markers</option>
+    </select>
+    <button id="plotButton" disabled>Plot Points</button>
+    <button id="resetButton" disabled>Reset</button>
+    <button id="exportButton" disabled>Export Points</button>
+  </div> 
+  
+  <div id="plot"></div>
+
+  <h4>Transformations</h4>
+
+  <div id="mirroring">
+    <label for="mirrorAxis">Mirror By:</label>
+    <select id="mirrorAxis" disabled>
+      <option value="x">Horizontal Axis at Origin</option>
+      <option value="y">Vertical Axis at Origin</option>
+      <option value="customY">Custom Horizontal Axis at Given Y</option>
+      <option value="customX">Custom Vertical Axis at Given X</option>
+      
+    </select>
+    <button id="mirrorButton" disabled>Apply Mirror</button>
+  </div>
+
+  <div id="rotating">
+    <label for="rotationAngle">Rotation (Degrees):</label>
+    <input type="number" id="rotationAngle" value="0" disabled>
+    <button id="rotateButton" disabled>Apply Rotation</button>
+  </div>
+
+  <div id="translating">
+    <label for="translationX">Translate X:</label>
+    <input type="number" id="translationX" value="0" disabled>
+    <label for="translationY">Translate Y:</label>
+    <input type="number" id="translationY" value="0" disabled>
+    <button id="translateButton" disabled>Apply Translation</button>
+  </div>
+
+  <div id="scaling">
+    <label for="scalingFactor">Scaling Factor:</label>
+    <input type="number" id="scalingFactor" value="1" step="0.1" disabled>
+    <button id="scaleButton" disabled>Apply Scaling</button>
+  </div>
+
+  <div id="explanations">
+    <button id="explanationButton" disabled>Show Explanation</button>
+  </div>
+
+  <script src="js/script-system-F.js" charset="utf-8"></script>
+
+</body>
+</html>

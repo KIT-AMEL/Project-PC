@@ -6,7 +6,16 @@
     <title>Project PC - System-C</title>
     <style>
         body {
-            margin-left: 20px; /* Adjust the value to your preference */
+            margin: 0; /* Reset default margin */
+            display: flex;
+            justify-content: center; /* Center horizontally */
+            min-height: 100vh; /* Ensure full viewport height */
+        }
+        .container {
+            text-align: center; /* Center text elements like <h3> */
+        }
+        #instructions {
+            margin: 10px 0;
         }
         #canvas {
             border: 1px solid black;
@@ -18,29 +27,31 @@
     </style>
 </head>
 <body>
+    <div class="container">
 
-<h3>Interactive Bézier Curves</h3>
+        <h3>Interactive Bézier Curves</h3>
 
-<label for="curveSelect">Select Curve:</label>
-<select id="curveSelect" onchange="updateInstructions()">
-    <option value="quadraticBezier" selected>Quadratic Bézier Curve</option>
-    <option value="cubicBezier">Cubic Bézier Curve</option>
-    <option value="bezierBernstein">Bézier Bernstein Curve</option>
-</select>
+        <label for="curveSelect">Select Curve:</label>
+        <select id="curveSelect" onchange="updateInstructions()">
+            <option value="quadraticBezier" selected>Quadratic Bézier Curve</option>
+            <option value="cubicBezier">Cubic Bézier Curve</option>
+            <option value="bezierBernstein">Bézier Bernstein Curve</option>
+        </select>
 
-<div id="instructions">Instructions: Select 3 points for the Quadratic Bézier Curve. Drag points to adjust the curve dynamically.</div>
+        <div id="instructions">Instructions: Select 3 points for the Quadratic Bézier Curve. Drag points to adjust the curve dynamically.</div>
 
-<canvas id="canvas" width="600" height="400"></canvas>
+        <canvas id="canvas" width="600" height="400"></canvas>
 
-<div class="button-container">
-    <button onclick="deleteAllPoints()">Delete All Points</button>
-    <button id="adjustButton" onclick="toggleAdjustMode()">Enable Adjust Mode</button>
-    <button onclick="showExplanation()">Explain</button>
-</div>
+        <div class="button-container">
+            <button onclick="deleteAllPoints()">Delete All Points</button>
+            <button id="adjustButton" onclick="toggleAdjustMode()">Enable Adjust Mode</button>
+            <button onclick="showExplanation()">Explain</button>
+        </div>
 
-<h4>Explanation</h4>
-<textarea id="explanationArea" rows="50" cols="100" readonly></textarea>
+        <h4>Explanation</h4>
+        <textarea id="explanationArea" rows="50" cols="100" readonly></textarea>
 
+    </div>
 
 <script src="js/script-system-C.js"></script>
 
