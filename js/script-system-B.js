@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
     selectModeButton.addEventListener('click', () => {
       mode = 'select';
       adjustModeButton.disabled = false;
-      generatePointsButton.disabled = true;
+      generatePointsButton.disabled = false;
       exportButton.disabled = true;
     });
 
@@ -90,6 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (mode === 'adjust' && draggingPointIndex !== null) {
         const { x, y } = getMousePos(event);
         points[draggingPointIndex] = { x, y };
+        generateSmoothPoints();
         redraw();
       }
     });
@@ -98,10 +99,22 @@ document.addEventListener('DOMContentLoaded', () => {
       draggingPointIndex = null;
     });
 
-    // Export points
+    // Export both control points and dense points
     exportButton.addEventListener('click', () => {
-      const csvData = densePoints.map((p) => `${p.x},${p.y}`).join('\n');
-      const blob = new Blob([csvData], { type: 'text/plain' });
+      let csvData = "Type,X,Y\n";
+
+      // Add control points to the CSV
+      points.forEach((p) => {
+          csvData += `Control,${p.x},${p.y}\n`;
+      });
+
+      // Add dense points to the CSV
+      densePoints.forEach((p) => {
+          csvData += `Dense,${p.x},${p.y}\n`;
+      });
+
+      // Create and download the CSV file
+      const blob = new Blob([csvData], { type: 'text/csv' });
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
@@ -116,6 +129,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
       drawPoints();
       //drawBezierCurve();
+
+      // Draw dense points dynamically
+      densePoints.forEach((p) => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
+        ctx.fillStyle = 'blue';
+        ctx.fill();
+      });
     }
 
     // Draw all points
@@ -182,16 +203,18 @@ document.addEventListener('DOMContentLoaded', () => {
         const point = getBezierPoint(points, t);
         densePoints.push(point);
       }
+      
+      redraw();
 
       // Display dense points on the canvas
-      densePoints.forEach((p) => {
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
-        ctx.fillStyle = 'green';
-        ctx.fill();
-      });
+      //densePoints.forEach((p) => {
+        //ctx.beginPath();
+        //ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
+        //ctx.fillStyle = 'blue';
+        //ctx.fill();
+      //});
 
-      console.log('Dense Points:', densePoints);
+      //console.log('Dense Points:', densePoints);
     }
 
     // Calculate Bezier curve point at a given t

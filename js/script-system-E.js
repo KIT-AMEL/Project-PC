@@ -75,17 +75,19 @@ document.addEventListener('DOMContentLoaded', () => {
         alert('Drag points to adjust their positions.');
       });
 
-      // Generate Dense Points
-      generatePointsButton.addEventListener('click', () => {
+      function generateSmoothPoints() {
         const numPoints = parseInt(numDensePointsInput.value, 10) || 100;
         const step = 1 / (numPoints - 1);
         densePoints = [];
         for (let t = 0; t <= 1; t += step) {
-          densePoints.push(getBezierPoint(points, t));
+            densePoints.push(getBezierPoint(points, t));
         }
-        redraw();
+        redraw(); // Ensure new dense points appear instantly
         doneSetButton.disabled = false;
-      });
+      }
+
+      // Generate Dense Points
+      generatePointsButton.addEventListener('click', generateSmoothPoints);
 
       // Finalize the Current Point Cloud Set
       doneSetButton.addEventListener('click', () => {
@@ -158,48 +160,33 @@ document.addEventListener('DOMContentLoaded', () => {
       // Export All Point Clouds to CSV
       exportAllButton.addEventListener('click', () => {
         if (allPointClouds.length === 0) {
-          alert('No point clouds to export.');
-          return;
+            alert('No point clouds to export.');
+            return;
         }
-
-        // Create CSV headers
-        let headers = [];
-        for (let i = 0; i < allPointClouds.length; i++) {
-          headers.push(`Set${i + 1}X`, `Set${i + 1}Y`);
-        }
-
-        // Get the maximum number of points across all sets
-        const maxPoints = Math.max(...allPointClouds.map(set => set.densePoints.length));
-
-        // Create CSV rows
-        let rows = [];
-        for (let i = 0; i < maxPoints; i++) {
-          let row = [];
-          for (let set of allPointClouds) {
-            const point = set.densePoints[i];
-            if (point) {
-              row.push(point.x, point.y); // Add X and Y values
-            } else {
-              row.push("", ""); // Add empty values for missing points
-            }
-          }
-          rows.push(row);
-        }
-
-        // Combine headers and rows into a CSV string
-        const csvContent = [
-          headers.join(","), // Header row
-          ...rows.map(row => row.join(",")) // Data rows
-        ].join("\n");
-
-        // Create a Blob and download the CSV
-        const blob = new Blob([csvContent], { type: 'text/csv' });
+    
+        let csvData = "Set,Type,X,Y\n"; // Add headers
+    
+        allPointClouds.forEach((set, index) => {
+            // Add control points first
+            set.points.forEach((p) => {
+                csvData += `Set ${index + 1},Control,${p.x},${p.y}\n`;
+            });
+    
+            // Add dense points
+            set.densePoints.forEach((p) => {
+                csvData += `Set ${index + 1},Dense,${p.x},${p.y}\n`;
+            });
+        });
+    
+        // Create and download the CSV file
+        const blob = new Blob([csvData], { type: 'text/csv' });
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = url;
         link.download = 'pointClouds.csv';
         link.click();
       });
+    
 
 
       // Canvas Interaction
@@ -224,6 +211,7 @@ document.addEventListener('DOMContentLoaded', () => {
           const x = event.clientX - rect.left;
           const y = event.clientY - rect.top;
           points[draggingPointIndex] = { x, y };
+          generateSmoothPoints(); // Automatically regenerate the smooth points
           redraw();
         }
       });

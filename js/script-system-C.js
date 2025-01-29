@@ -83,6 +83,18 @@ document.addEventListener('DOMContentLoaded', () => {
         drawGrid();
         drawAxes();
 
+        // Draw lines connecting the points (to show order)
+        if (points.length > 1) {
+            ctx.beginPath();
+            ctx.moveTo(points[0].x, points[0].y);
+            for (let i = 1; i < points.length; i++) {
+                ctx.lineTo(points[i].x, points[i].y);
+            }
+            ctx.strokeStyle = "red"; // Line color (change if needed)
+            ctx.lineWidth = 1; // Line thickness
+            ctx.stroke();
+        }
+
         points.forEach((point) => {
             ctx.beginPath();
             ctx.arc(point.x, point.y, 5, 0, 2 * Math.PI);
@@ -90,8 +102,8 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.fill();
             ctx.stroke();
 
-            ctx.fillStyle = "black";
-            ctx.fillText(`(${point.x.toFixed(3)}, ${point.y.toFixed(3)})`, point.x + 10, point.y - 10);
+            //ctx.fillStyle = "black";
+            //ctx.fillText(`(${point.x.toFixed(3)}, ${point.y.toFixed(3)})`, point.x + 10, point.y - 10);
         });
 
         drawSelectedCurve();
@@ -290,13 +302,13 @@ document.addEventListener('DOMContentLoaded', () => {
             explanation += "\nWhere P0, P1, and P2 are the selected control points, and t is a parameter from 0 to 1.";
             explanation += "At each value of t (from 0 to 1), the corresponding point on the curve is calculated using the above equation. The t value interpolates between the control points.\n";
             explanation += "The generated curve points are calculated for t values ranging from 0 to 1, with a step size (del t) of 0.01.\n";
-            explanation += "\n\nSelected Points:\n";
+            explanation += "\n\nControl Points (X,Y):\n";
             points.forEach((point, index) => {
                 explanation += `Point ${index + 1}: ${point.x.toFixed(3)}, ${point.y.toFixed(3)}\n`;
             });
             explanation += "\nThe curve is calculated by evaluating the polynomial for multiple t values between 0 and 1, generating the smooth curve.\n";
             
-            explanation += "\nFinal Curve Points:\n";
+            explanation += "\nDense Points for Curve (X,Y):\n";
             for (let t = 0; t <= 1; t += 0.01) {
                 const [p0, p1, p2] = points;
                 const x = Math.pow(1 - t, 2) * p0.x + 2 * (1 - t) * t * p1.x + Math.pow(t, 2) * p2.x;
@@ -310,13 +322,13 @@ document.addEventListener('DOMContentLoaded', () => {
             explanation += "\nWhere P0, P1, P2, and P3 are the selected control points, and t is a parameter from 0 to 1.";
             explanation += "At each value of t (from 0 to 1), the corresponding point on the curve is calculated using the above equation. The t value interpolates between the control points.\n";
             explanation += "The generated curve points are calculated for t values ranging from 0 to 1, with a step size (del t) of 0.01.\n";
-            explanation += "\n\nSelected Points:\n";
+            explanation += "\n\nControl Points (X,Y):\n";
             points.forEach((point, index) => {
                 explanation += `Point ${index + 1}: ${point.x.toFixed(3)}, ${point.y.toFixed(3)}\n`;
             });
             explanation += "\nThe curve is calculated by evaluating the polynomial for multiple t values between 0 and 1, generating the smooth curve.\n";
             
-            explanation += "\nFinal Curve Points:\n";
+            explanation += "\nDense Points for Curve (X,Y):\n";
             for (let t = 0; t <= 1; t += 0.01) {
                 const [p0, p1, p2, p3] = points;
                 const x = Math.pow(1 - t, 3) * p0.x + 3 * Math.pow(1 - t, 2) * t * p1.x + 3 * (1 - t) * Math.pow(t, 2) * p2.x + Math.pow(t, 3) * p3.x;
@@ -334,12 +346,12 @@ document.addEventListener('DOMContentLoaded', () => {
     	    explanation += "\nWhere n is the degree of the curve (the number of control points - 1), and i is the index of the control point.\n";
     	    explanation += "For each value of t (from 0 to 1), the corresponding point on the curve is calculated using the Bernstein basis function.\n";
     	    explanation += "The generated curve points are calculated for t values ranging from 0 to 1, with a step size (del t) of 0.01.\n";
-            explanation += "\n\nSelected Points:\n";
+            explanation += "\n\nControl Points (X,Y):\n";
             points.forEach((point, index) => {
                 explanation += `Point ${index + 1}: ${point.x.toFixed(3)}, ${point.y.toFixed(3)}\n`;
             });
 
-            explanation += "\nFinal Curve Points:\n";
+            explanation += "\nDense Points for Curve (X,Y):\n";
             for (let t = 0; t <= 1; t += 0.01) {
                 let x = 0, y = 0;
                 for (let i = 0; i < points.length; i++) {
