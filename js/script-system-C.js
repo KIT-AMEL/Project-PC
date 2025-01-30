@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         drawGrid();
-        drawAxes();
+        //drawAxes();
 
         // Draw lines connecting the points (to show order)
         if (points.length > 1) {
@@ -298,15 +298,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (curveType === "quadraticBezier") {
             explanation = "Quadratic Bézier Curve Equation:\n\n";
-            explanation += "B(t) = (1 - t)^2 * P0 + 2 * (1 - t) * t * P1 + t^2 * P2\n";
-            explanation += "\nWhere P0, P1, and P2 are the selected control points, and t is a parameter from 0 to 1.";
-            explanation += "At each value of t (from 0 to 1), the corresponding point on the curve is calculated using the above equation. The t value interpolates between the control points.\n";
-            explanation += "The generated curve points are calculated for t values ranging from 0 to 1, with a step size (del t) of 0.01.\n";
-            explanation += "\n\nControl Points (X,Y):\n";
+            explanation += "B(t) = (1 - t)² × P₀ + 2 × (1 - t) × t × P₁ + t² × P₂\n";
+            explanation += "\nWhere P₀, P₁, and P₂ are the selected control points, and t is a parameter from 0 to 1.";
+            explanation += "\nThe curve is calculated by evaluating the polynomial for multiple t values between 0 and 1, generating the smooth curve.";
+            explanation += "\nThe generated curve points are calculated for t values ranging from 0 to 1, with a step size (del t) of 0.01.\n";
+            explanation += "\nControl Points (X,Y):\n";
             points.forEach((point, index) => {
-                explanation += `Point ${index + 1}: ${point.x.toFixed(3)}, ${point.y.toFixed(3)}\n`;
-            });
-            explanation += "\nThe curve is calculated by evaluating the polynomial for multiple t values between 0 and 1, generating the smooth curve.\n";
+                explanation += `${point.x.toFixed(3)}, ${point.y.toFixed(3)}\n`;
+            });            
             
             explanation += "\nDense Points for Curve (X,Y):\n";
             for (let t = 0; t <= 1; t += 0.01) {
@@ -318,15 +317,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         } else if (curveType === "cubicBezier") {
             explanation = "Cubic Bézier Curve Equation:\n\n";
-            explanation += "B(t) = (1 - t)^3 * P0 + 3 * (1 - t)^2 * t * P1 + 3 * (1 - t) * t^2 * P2 + t^3 * P3\n";
-            explanation += "\nWhere P0, P1, P2, and P3 are the selected control points, and t is a parameter from 0 to 1.";
-            explanation += "At each value of t (from 0 to 1), the corresponding point on the curve is calculated using the above equation. The t value interpolates between the control points.\n";
-            explanation += "The generated curve points are calculated for t values ranging from 0 to 1, with a step size (del t) of 0.01.\n";
-            explanation += "\n\nControl Points (X,Y):\n";
+            explanation += "B(t) = (1 - t)³ × P₀ + 3 × (1 - t)² × t × P₁ + 3 × (1 - t) × t² × P₂ + t³ * P₃\n";
+            explanation += "\nWhere P₀, P₁, P₂, and P₃ are the selected control points, and t is a parameter from 0 to 1.";
+            explanation += "\nThe curve is calculated by evaluating the polynomial for multiple t values between 0 and 1, generating the smooth curve.";
+            explanation += "\nThe generated curve points are calculated for t values ranging from 0 to 1, with a step size (del t) of 0.01.\n";
+            explanation += "\nControl Points (X,Y):\n";
             points.forEach((point, index) => {
-                explanation += `Point ${index + 1}: ${point.x.toFixed(3)}, ${point.y.toFixed(3)}\n`;
+                explanation += `${point.x.toFixed(3)}, ${point.y.toFixed(3)}\n`;
             });
-            explanation += "\nThe curve is calculated by evaluating the polynomial for multiple t values between 0 and 1, generating the smooth curve.\n";
             
             explanation += "\nDense Points for Curve (X,Y):\n";
             for (let t = 0; t <= 1; t += 0.01) {
@@ -339,16 +337,16 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (curveType === "bezierBernstein") {
             //explanation = "Bézier Bernstein Curve Equation (Degree " + (numPoints - 1) + "):\n\n";
             explanation = "Bézier Bernstein Curve Equation:\n\n";
-            explanation += "B(t) = Σ (C(n, i) * (1 - t)^(n - i) * t^i * P_i)\n";
+            explanation += "B(t) = Σ C(n, i) × (1 - t)ⁿ⁻ⁱ × tⁱ × Pᵢ\n";
             explanation += "\nWhere C(n, i) is the binomial coefficient, P_i are the control points, and t is a parameter from 0 to 1.";
-    	    explanation += "The binomial coefficient C(n, i) is calculated as:\n";
-    	    explanation += "C(n, i) = n! / (i! * (n - i)!)\n";
+    	    explanation += "\nThe binomial coefficient C(n, i) is calculated as:\n";
+    	    explanation += "\nC(n, i) = n! / (i! × (n - i)!)\n";
     	    explanation += "\nWhere n is the degree of the curve (the number of control points - 1), and i is the index of the control point.\n";
-    	    explanation += "For each value of t (from 0 to 1), the corresponding point on the curve is calculated using the Bernstein basis function.\n";
+    	    explanation += "\nFor each value of t (from 0 to 1), the corresponding point on the curve is calculated using the Bernstein basis function.\n";
     	    explanation += "The generated curve points are calculated for t values ranging from 0 to 1, with a step size (del t) of 0.01.\n";
-            explanation += "\n\nControl Points (X,Y):\n";
+            explanation += "\nControl Points (X,Y):\n";
             points.forEach((point, index) => {
-                explanation += `Point ${index + 1}: ${point.x.toFixed(3)}, ${point.y.toFixed(3)}\n`;
+                explanation += `${point.x.toFixed(3)}, ${point.y.toFixed(3)}\n`;
             });
 
             explanation += "\nDense Points for Curve (X,Y):\n";
