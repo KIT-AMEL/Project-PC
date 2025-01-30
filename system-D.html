@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project PC - System-D</title>
+    <script src="js/d3.v6.min.js"></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            text-align: center;
+        }
+        #instructions {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        .canvas-container {
+            border: 1px solid black;
+            width: 600px;
+            height: 400px;
+            position: relative;
+            background-color: #f9f9f9;
+        }
+        svg {
+            width: 100%;
+            height: 100%;
+        }
+        .button-container {
+            margin-top: 10px;
+        }
+        .control-point {
+            fill: red;
+            cursor: pointer;
+        }
+        .grid line {
+            stroke: #ddd;
+            stroke-width: 0.5;
+        }
+        .control-polygon {
+            stroke: red;
+            stroke-width: 1;
+            fill: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h3>Interactive Spline Curves</h3>
+
+        <label for="splineSelect">Select Spline Type:</label>
+        <select id="splineSelect" onchange="updateInstructions()">
+            <option value="cubicSpline" selected>Cubic Spline</option>
+            <option value="catmullRom">Catmull-Rom Spline</option>
+            <option value="bSpline">B-Spline</option>
+        </select>
+
+        <div id="instructions">Instructions: Click to create at least 4 points. Drag points to adjust the curve dynamically.</div>
+
+        <div class="canvas-container">
+            <svg id="canvas"></svg>
+        </div>
+
+        <div class="button-container">
+            <button onclick="deleteAllPoints()">Delete All Points</button>
+            <button onclick="showExplanation()">Explain</button>
+        </div>
+
+        <h4>Explanation</h4>
+        <textarea id="explanationArea" rows="15" cols="80" readonly></textarea>
+    </div>
+
+    <script src="js/script-system-D.js"> </script>
+</body>
+</html>
