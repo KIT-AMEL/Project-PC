@@ -35,6 +35,7 @@
                 svg.append("path")
                     .datum(points)
                     .attr("class", "control-polygon")
+                    .attr("stroke-width", 1)
                     .attr("d", d3.line().x(d => d.x).y(d => d.y));
             }
 
@@ -73,7 +74,7 @@
                 .datum(points)
                 .attr("fill", "none")
                 .attr("stroke", "blue")
-                .attr("stroke-width", 2)
+                .attr("stroke-width", 1)
                 .attr("d", lineGenerator.x(d => d.x).y(d => d.y));
         }
 
@@ -157,13 +158,13 @@
             }
         
             // Print control points
-            explanation += "\nControl Points (X, Y):\n";
+            explanation += "\nControl Points (X,Y):\n";
             points.forEach((p, i) => {
-                explanation += `${p.x.toFixed(3)}, ${p.y.toFixed(3)}\n`;
+                explanation += `${p.x.toFixed(5)}, ${p.y.toFixed(5)}\n`;
             });
         
             // Generate real dense points from the actual spline curve
-            explanation += "\nDense Points for Curve (X, Y):\n";
+            explanation += "\nDense Points for Curve (X,Y):\n";
             
             const lineGenerator = d3.line()
                 .x(d => d.x)
@@ -179,9 +180,17 @@
         
             // Generate path string for D3.js
             const pathData = lineGenerator(points);
+
+            // Create a temporary SVG that’s hidden from view
+            const tempSvg = d3.select("body")
+                .append("svg")
+                .attr("width", 0)
+                .attr("height", 0)
+                .style("position", "absolute")
+                .style("left", "-9999px");  // Moves it far off-screen
         
             // Add a hidden path element to extract actual curve points
-            const tempPath = d3.select("body").append("svg").append("path")
+            const tempPath = tempSvg.append("path")
                 .attr("d", pathData)
                 .attr("fill", "none")
                 .attr("stroke", "none");
@@ -196,11 +205,11 @@
             }
         
             // Remove the temporary path from the DOM
-            tempPath.remove();
+            tempSvg.remove();
         
             // Append dense points to the explanation
             densePoints.forEach(p => {
-                explanation += `${p.x.toFixed(3)}, ${p.y.toFixed(3)}\n`;
+                explanation += `${p.x.toFixed(5)}, ${p.y.toFixed(5)}\n`;
             });
 
              // 📌 How Dense Points Are Computed (Generic for All Spline Types)

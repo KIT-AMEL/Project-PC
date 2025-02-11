@@ -146,7 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
         allPointClouds.forEach((set) => {
           set.densePoints.forEach((point) => {
             ctx.beginPath();
-            ctx.arc(point.x, point.y, 2, 0, Math.PI * 2);
+            ctx.arc(point.x, point.y, 3, 0, Math.PI * 2);
             ctx.fillStyle = 'blue';
             ctx.fill();
           });
@@ -169,12 +169,12 @@ document.addEventListener('DOMContentLoaded', () => {
         allPointClouds.forEach((set, index) => {
             // Add control points first
             set.points.forEach((p) => {
-                csvData += `Set ${index + 1},Control,${p.x},${p.y}\n`;
+                csvData += `Set ${index + 1},Control,${p.x.toFixed(5)},${p.y.toFixed(5)}\n`; 
             });
     
             // Add dense points
             set.densePoints.forEach((p) => {
-                csvData += `Set ${index + 1},Dense,${p.x},${p.y}\n`;
+                csvData += `Set ${index + 1},Dense,${p.x.toFixed(5)},${p.y.toFixed(5)}\n`;
             });
         });
     
@@ -183,7 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = url;
-        link.download = 'pointClouds.csv';
+        link.download = 'points.csv';
         link.click();
       });
     
@@ -238,7 +238,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.lineTo(points[i].x, points[i].y); // Connect to the next point
           }
           ctx.strokeStyle = 'red';
-          ctx.lineWidth = 1.5;
+          ctx.lineWidth = 1;
           ctx.stroke();
         }
 
@@ -255,7 +255,7 @@ document.addEventListener('DOMContentLoaded', () => {
       function drawDensePoints() {
         densePoints.forEach((point) => {
           ctx.beginPath();
-          ctx.arc(point.x, point.y, 2, 0, Math.PI * 2);
+          ctx.arc(point.x, point.y, 3, 0, Math.PI * 2);
           ctx.fillStyle = 'blue';
           ctx.fill();
         });

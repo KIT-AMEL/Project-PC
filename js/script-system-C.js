@@ -167,6 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.moveTo(p0.x, p0.y);
             ctx.quadraticCurveTo(p1.x, p1.y, p2.x, p2.y);
             ctx.strokeStyle = "blue";
+            ctx.lineWidth = 1;
             ctx.stroke();
         }
     }
@@ -180,6 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.moveTo(p0.x, p0.y);
             ctx.bezierCurveTo(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y);
             ctx.strokeStyle = "blue";
+            ctx.lineWidth = 1;
             ctx.stroke();
         }
     }
@@ -206,6 +208,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         ctx.strokeStyle = "blue";
+        ctx.lineWidth = 1;
         ctx.stroke();
     }
 
@@ -304,7 +307,7 @@ document.addEventListener('DOMContentLoaded', () => {
             explanation += "\nThe generated curve points are calculated for t values ranging from 0 to 1, with a step size (del t) of 0.01.\n";
             explanation += "\nControl Points (X,Y):\n";
             points.forEach((point, index) => {
-                explanation += `${point.x.toFixed(3)}, ${point.y.toFixed(3)}\n`;
+                explanation += `${point.x.toFixed(5)}, ${point.y.toFixed(5)}\n`;
             });            
             
             explanation += "\nDense Points for Curve (X,Y):\n";
@@ -312,7 +315,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const [p0, p1, p2] = points;
                 const x = Math.pow(1 - t, 2) * p0.x + 2 * (1 - t) * t * p1.x + Math.pow(t, 2) * p2.x;
                 const y = Math.pow(1 - t, 2) * p0.y + 2 * (1 - t) * t * p1.y + Math.pow(t, 2) * p2.y;
-                explanation += `${x.toFixed(3)}, ${y.toFixed(3)}\n`;
+                explanation += `${x.toFixed(5)}, ${y.toFixed(5)}\n`;
             }
 
         } else if (curveType === "cubicBezier") {
@@ -323,7 +326,7 @@ document.addEventListener('DOMContentLoaded', () => {
             explanation += "\nThe generated curve points are calculated for t values ranging from 0 to 1, with a step size (del t) of 0.01.\n";
             explanation += "\nControl Points (X,Y):\n";
             points.forEach((point, index) => {
-                explanation += `${point.x.toFixed(3)}, ${point.y.toFixed(3)}\n`;
+                explanation += `${point.x.toFixed(5)}, ${point.y.toFixed(5)}\n`;
             });
             
             explanation += "\nDense Points for Curve (X,Y):\n";
@@ -331,7 +334,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const [p0, p1, p2, p3] = points;
                 const x = Math.pow(1 - t, 3) * p0.x + 3 * Math.pow(1 - t, 2) * t * p1.x + 3 * (1 - t) * Math.pow(t, 2) * p2.x + Math.pow(t, 3) * p3.x;
                 const y = Math.pow(1 - t, 3) * p0.y + 3 * Math.pow(1 - t, 2) * t * p1.y + 3 * (1 - t) * Math.pow(t, 2) * p2.y + Math.pow(t, 3) * p3.y;
-                explanation += `${x.toFixed(3)}, ${y.toFixed(3)}\n`;
+                explanation += `${x.toFixed(5)}, ${y.toFixed(5)}\n`;
             }
 
         } else if (curveType === "bezierBernstein") {
@@ -346,7 +349,7 @@ document.addEventListener('DOMContentLoaded', () => {
     	    explanation += "The generated curve points are calculated for t values ranging from 0 to 1, with a step size (del t) of 0.01.\n";
             explanation += "\nControl Points (X,Y):\n";
             points.forEach((point, index) => {
-                explanation += `${point.x.toFixed(3)}, ${point.y.toFixed(3)}\n`;
+                explanation += `${point.x.toFixed(5)}, ${point.y.toFixed(5)}\n`;
             });
 
             explanation += "\nDense Points for Curve (X,Y):\n";
@@ -357,7 +360,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     x += b * points[i].x;
                     y += b * points[i].y;
                 }
-                explanation += `${x.toFixed(3)}, ${y.toFixed(3)}\n`;
+                explanation += `${x.toFixed(5)}, ${y.toFixed(5)}\n`;
             }
         }
 

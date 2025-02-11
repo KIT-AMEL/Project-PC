@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
       points.forEach((point, index) => {
           const listItem = document.createElement('li');
           listItem.classList.add('point-item');
-          listItem.textContent = `Point ${index + 1}: (${point.x.toFixed(0)}, ${point.y.toFixed(0)})`;
+          listItem.textContent = `Point ${index + 1}: (${point.x.toFixed(5)}, ${point.y.toFixed(5)})`;
 
           // Up button
           const upButton = document.createElement('button');
@@ -283,7 +283,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
       // Add each point to the CSV content
       points.forEach((point, index) => {
-          csvContent += `${index + 1},${point.x.toFixed(0)},${point.y.toFixed(0)}\n`;
+          csvContent += `${index + 1},${point.x.toFixed(5)},${point.y.toFixed(5)}\n`;
       });
   
       // Create a downloadable link for the CSV file
@@ -304,7 +304,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Prepare OpenSCAD points format
       let openSCADContent = "[";
       points.forEach((point, index) => {
-          openSCADContent += `[${point.x.toFixed(0)}, ${point.y.toFixed(0)}]`;
+          openSCADContent += `[${point.x.toFixed(5)}, ${point.y.toFixed(5)}]`;
           if (index < points.length - 1) {
               openSCADContent += ", ";
           }

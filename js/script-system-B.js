@@ -105,12 +105,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Add control points to the CSV
       points.forEach((p) => {
-          csvData += `Control,${p.x},${p.y}\n`;
+          csvData += `Control,${p.x.toFixed(5)},${p.y.toFixed(5)}\n`;
       });
 
       // Add dense points to the CSV
       densePoints.forEach((p) => {
-          csvData += `Dense,${p.x},${p.y}\n`;
+          csvData += `Dense,${p.x.toFixed(5)},${p.y.toFixed(5)}\n`;
       });
 
       // Create and download the CSV file
@@ -133,7 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Draw dense points dynamically
       densePoints.forEach((p) => {
         ctx.beginPath();
-        ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
+        ctx.arc(p.x, p.y, 3, 0, Math.PI * 2);
         ctx.fillStyle = 'blue';
         ctx.fill();
       });
@@ -149,7 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
           ctx.lineTo(points[i].x, points[i].y); // Connect to the next point
         }
         ctx.strokeStyle = 'red';
-        ctx.lineWidth = 1.5;
+        ctx.lineWidth = 1;
         ctx.stroke();
       }
     
@@ -190,7 +190,7 @@ document.addEventListener('DOMContentLoaded', () => {
       ctx.quadraticCurveTo(secondLastPoint.x, secondLastPoint.y, lastPoint.x, lastPoint.y);
 
       ctx.strokeStyle = 'blue';
-      ctx.lineWidth = 2;
+      ctx.lineWidth = 1;
       ctx.stroke();
     }
 
@@ -209,7 +209,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Display dense points on the canvas
       //densePoints.forEach((p) => {
         //ctx.beginPath();
-        //ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
+        //ctx.arc(p.x, p.y, 3, 0, Math.PI * 2);
         //ctx.fillStyle = 'blue';
         //ctx.fill();
       //});
