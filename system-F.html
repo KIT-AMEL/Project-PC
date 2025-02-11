@@ -6,13 +6,16 @@
   <title>Project PC - System-F</title>
   <script src="js/plotly-2.24.1.min.js" charset="utf-8"></script>
   <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
     #plot {
       width: 800px;
       height: 600px;
       margin: 20px auto;
       border: 1px solid black;
     }
-    #sample, #controls, #mirroring, #rotating, #translating, #scaling, #explanations {
+    #sample, #controls, #mirroring, #rotating, #translating, #scaling, #explanations, #sampling, #centering {
       text-align: center;
       margin: 10px auto;
     }
@@ -22,6 +25,58 @@
     h4 {
       text-align: center;
       margin-top: 20px;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+    .modal-content {
+      background-color: white;
+      margin: 15% auto;
+      padding: 20px;
+      border: 1px solid black;
+      width: 80%;
+      max-height: 70vh;
+      overflow-y: auto;
+    }
+    .close {
+      color: black;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+    .close:hover,
+    .close:focus {
+      color: red;
+      cursor: pointer;
+    }
+    /* Tab styling */
+    .tabs {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .tab-button {
+      background-color: #f1f1f1;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-size: 16px;
+      margin: 0 5px;
+    }
+    .tab-button.active {
+      background-color: #ccc;
+    }
+    .tab-panel {
+      display: none;  /* Hide all tab panels by default */
+    }
+    .tab-panel.active {
+        display: block; /* Show only the active panel */
     }
   </style>
 </head>
@@ -37,54 +92,123 @@
 
   <div id="controls">
     <label for="plotType">Select Plot Type: </label>
-    <select id="plotType" disabled>
+    <select id="plotType">
       <option value="scatter">Scatter</option>
       <option value="line">Line</option>
       <option value="lineWithMarkers">Line with Markers</option>
     </select>
-    <button id="plotButton" disabled>Plot Points</button>
-    <button id="resetButton" disabled>Reset</button>
-    <button id="exportButton" disabled>Export Points</button>
+    <button id="plotButton">Plot Points</button>
+    <button id="resetButton">Reset</button>
+    <button id="exportButton">Export Points</button>
+    <button id="explanationButton">Show Explanation</button>
   </div> 
   
   <div id="plot"></div>
 
-  <h4>Transformations</h4>
-
-  <div id="mirroring">
-    <label for="mirrorAxis">Mirror By:</label>
-    <select id="mirrorAxis" disabled>
-      <option value="x">Horizontal Axis at Origin</option>
-      <option value="y">Vertical Axis at Origin</option>
-      <option value="customY">Custom Horizontal Axis at Given Y</option>
-      <option value="customX">Custom Vertical Axis at Given X</option>
-      
-    </select>
-    <button id="mirrorButton" disabled>Apply Mirror</button>
+  <!-- Tab Navigation -->
+  <div class="tabs">
+    <button class="tab-button active" data-tab="mirror">Mirror</button>
+    <button class="tab-button" data-tab="rotate">Rotate</button>
+    <button class="tab-button" data-tab="translate">Translate</button>
+    <button class="tab-button" data-tab="scale">Scale</button>
+    <button class="tab-button" data-tab="sample-reduce">Sample</button>
+    <button class="tab-button" data-tab="center-tab">Center</button>
   </div>
 
-  <div id="rotating">
-    <label for="rotationAngle">Rotation (Degrees):</label>
-    <input type="number" id="rotationAngle" value="0" disabled>
-    <button id="rotateButton" disabled>Apply Rotation</button>
+  <!-- Tab Content Panels -->
+  <div id="mirror" class="tab-panel active">
+    <!-- Existing mirror controls can go here -->
+    <div id="mirroring">
+      <label for="mirrorAxis">Mirror By:</label>
+      <select id="mirrorAxis">
+        <option value="x">Horizontal Axis at Origin</option>
+        <option value="y">Vertical Axis at Origin</option>
+        <option value="customY">Custom Horizontal Axis at Given Y</option>
+        <option value="customX">Custom Vertical Axis at Given X</option>        
+      </select>
+      <button id="mirrorButton">Mirror</button>
+    </div>
   </div>
 
-  <div id="translating">
-    <label for="translationX">Translate X:</label>
-    <input type="number" id="translationX" value="0" disabled>
-    <label for="translationY">Translate Y:</label>
-    <input type="number" id="translationY" value="0" disabled>
-    <button id="translateButton" disabled>Apply Translation</button>
+  <div id="rotate" class="tab-panel">
+    <!-- Existing rotation controls can go here -->
+    <div id="rotating">      
+      <label><input type="radio" name="rotationSign" value="+" checked>Counter-clockwise</label>
+      <label><input type="radio" name="rotationSign" value="-">Clockwise</label>
+      <br>
+      <!-- Rotation around origin -->
+      <h4>Default rotation around origin (0,0):</h4>
+      <label for="rotationAngle">Angle (Degrees):</label>
+      <input type="number" id="rotationAngle" value="0">
+      <br>
+      <button id="rotateButton">Rotate</button>
+      <br>
+      <!-- Rotation around a given reference point -->
+      <h4>Rotation around a given reference point (X₀,Y₀):</h4>
+      <label for="rotationRefX">X₀:</label>
+      <input type="number" id="rotationRefX" value="0">
+      <label for="rotationRefY">Y₀:</label>
+      <input type="number" id="rotationRefY" value="0">
+      <label for="rotationAngleRef">Angle (Degrees):</label>
+      <input type="number" id="rotationAngleRef" value="0">
+      <br>
+      <button id="rotateRefButton">Rotate</button>
+      <br>
+      <!-- Rotation around two reference points -->
+      <h4>Rotation based on two reference points:</h4>
+      <label for="tiltPoint1X">Point 1 X:</label>
+      <input type="number" id="tiltPoint1X" value="0">
+      <label for="tiltPoint1Y">Point 1 Y:</label>
+      <input type="number" id="tiltPoint1Y" value="0">
+      <label for="tiltPoint2X">Point 2 X:</label>
+      <input type="number" id="tiltPoint2X" value="0">
+      <label for="tiltPoint2Y">Point 2 Y:</label>
+      <input type="number" id="tiltPoint2Y" value="0">
+      <br>
+      <button id="tiltTwoPointsButton1">Rotate</button>
+    </div>
   </div>
 
-  <div id="scaling">
-    <label for="scalingFactor">Scaling Factor:</label>
-    <input type="number" id="scalingFactor" value="1" step="0.1" disabled>
-    <button id="scaleButton" disabled>Apply Scaling</button>
+  <div id="translate" class="tab-panel">
+    <!-- Existing translation controls can go here -->
+    <div id="translating">
+      <label for="translationX">Translate at X:</label>
+      <input type="number" id="translationX" value="0">
+      <label for="translationY">Translate at Y:</label>
+      <input type="number" id="translationY" value="0">
+      <button id="translateButton">Translate</button>
+    </div>
   </div>
 
-  <div id="explanations">
-    <button id="explanationButton" disabled>Show Explanation</button>
+  <div id="scale" class="tab-panel">
+    <!-- Existing scaling controls can go here -->
+    <div id="scaling">
+      <label for="scalingFactor">Scaling Factor:</label>
+      <input type="number" id="scalingFactor" value="1" step="0.1">
+      <button id="scaleButton">Scale</button>
+    </div>
+  </div>
+  
+  <div id="sample-reduce" class="tab-panel">
+    <div id="sampling">  
+      <label for="reduceFactor">Sample Points (Every nth point):</label>
+      <input type="number" id="reduceFactor" value="2" min="1">      
+      <button id="sampleButton">Sample</button>
+    </div>
+  </div>
+
+  <div id="center-tab" class="tab-panel">
+    <div id="centering">     
+      <button id="centeringButton">Center</button>
+    </div>
+  </div>
+
+  <!-- Explanation Modal -->
+  <div id="explanationModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <pre id="explanationText"></pre>
+    </div>
   </div>
 
   <script src="js/script-system-F.js" charset="utf-8"></script>

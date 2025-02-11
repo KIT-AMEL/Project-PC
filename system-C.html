@@ -6,13 +6,20 @@
     <title>Project PC - System-C</title>
     <style>
         body {
-            margin: 0; /* Reset default margin */
+            font-family: Arial, sans-serif;
+            margin: 0; /* Remove any default margin */
             display: flex;
-            justify-content: center; /* Center horizontally */
-            min-height: 100vh; /* Ensure full viewport height */
+            justify-content: center; /* Centers the whole container */
+            align-items: center; /* Ensures everything inside is aligned */
+            min-height: 100vh; /* Ensures full viewport height */
         }
         .container {
-            text-align: center; /* Center text elements like <h3> */
+            text-align: center;
+            display: flex;
+            flex-direction: column; /* Stack elements vertically */
+            align-items: center; /* Center each element horizontally */
+            justify-content: center; /* Ensures content is centered vertically */
+            gap: 10px; /* Consistent spacing */
         }
         #instructions {
             margin: 10px 0;
@@ -20,6 +27,10 @@
         #canvas {
             border: 1px solid black;
             cursor: crosshair;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f9f9f9;
         }
         .button-container {
             margin-top: 10px;

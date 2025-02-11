@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project PC - System-G</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
+        h1, h2 { color: #2c3e50; }
+        pre { background: #f4f4f4; padding: 10px; border-left: 4px solid #2c3e50; overflow-x: auto; }
+        .download-link {
+            display: inline-block; padding: 10px 20px; background-color: #3498db;
+            color: #fff; text-decoration: none; border-radius: 5px; font-weight: bold;
+        }
+        .download-link:hover { background-color: #2980b9; }
+        .media-container { margin-top: 10px; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+
+    <h3>Point Cloud Cleaning and Sorting System</h3>
+    
+    <a class="download-link" href="https://drive.google.com/uc?id=1Qqnc5sruQxaBimQCBxoKOKCWlOLKpo64&export=download">Download EXE (.zip)</a>
+    <p>Note: Google Drive may warn that a virus scan couldn’t be performed on this file. If you trust the source, please click 'Download anyway'.</p>
+
+    <h4>Overview</h4>
+    <div class="media-container">
+        <img src="js\system-G.gif" alt="Animated GIF" width="640">
+    </div>
+
+    <p>This system loads, cleans, sorts, and visualizes point clouds from CSV files. 
+    It removes duplicates, sorts using a <strong>Nearest Neighbor Search</strong> approach, and allows 
+    users to toggle between scatter or line plots. Results can be exported as CSV. Nearest Neighbor Search, 
+    often used in computational geometry and machine learning, learns spatial relationships dynamically and sorts accordingly.</p>
+
+    <h4>Required CSV Format</h4>
+    <pre>
+        X,Y,Z
+        1.0,2.0,10.0
+        3.2,4.5,5.0
+        5.1,1.8,7.0
+        ...
+    </pre>
+    <p>If the Z column is missing, it is auto-filled with 0.</p>
+
+    <a class="download-link" href="https://drive.google.com/uc?id=15xX_1bAqLKMvRMuywfKtkTMhervh3kY6&export=download">Download Sample CSV File</a>
+
+</body>
+</html>

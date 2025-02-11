@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project PC - System-I</title>
+  <script src="js/d3.v6.min.js"></script>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-family: Arial, sans-serif;
+    }
+    .container {
+      text-align: center;
+    }
+    .settings {
+      margin-bottom: 10px;
+    }
+    .settings label {
+      margin-right: 5px;
+    }
+    .canvas-container {
+      border: 1px solid black;
+      width: 800px;
+      height: 600px;
+      position: relative;
+      background-color: #f9f9f9;
+      margin: 20px auto;
+    }
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+    .button-container {
+      margin-top: 10px;
+    }
+    .control-point {
+      fill: red;
+      cursor: pointer;
+    }
+    .control-polygon {
+      stroke: red;
+      stroke-width: 1;
+      fill: none;
+    }
+    .dense-point {
+      fill: blue;
+    }
+    .all-dense-point {
+      fill: blue;
+    }
+    #cycleInfo {
+      margin: 10px;
+      font-weight: normal;
+    }
+    button {
+      margin: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h3>Interactive Multi-Set Path and Point Cloud Generator</h3>
+
+    <input type="file" id="imageLoader" accept="image/*" />
+
+    <div class="canvas-container">
+      <svg id="canvas"></svg>
+    </div>
+    
+    <!-- Settings area -->
+    <div class="settings">
+      <label for="totalCycles">Number of Sets:</label>
+      <input type="number" id="totalCycles" value="1" min="1" />
+      &nbsp;&nbsp;
+      <label for="densePointsCount">Number of Points:</label>
+      <input type="number" id="densePointsCount" value="100" min="10" />
+      &nbsp;&nbsp;
+      <label for="reuseLast">Continuity?</label>
+      <input type="checkbox" id="reuseLast" checked />
+    </div>
+
+    <div class="button-container">
+      <button onclick="cycleDone()">Finalize Set</button>
+      <button onclick="deleteAllPoints()">Clear Points</button>      
+      <button onclick="showAllDensePoints()">Show All Sets</button>
+      <button onclick="exportData()">Export All Sets</button>
+    </div>
+
+    <!-- Cycle status display -->
+    <div id="cycleInfo"></div>
+  </div>
+
+  <script src="js/script-system-I.js"></script>
+</body>
+</html>

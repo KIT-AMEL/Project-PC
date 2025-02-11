@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project PC - System-H</title>
+    <script src="js/d3.v6.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            text-align: center;
+        }
+        .canvas-container {
+            border: 1px solid black;
+            width: 800px;
+            height: 600px;
+            position: relative;
+            background-color: #f9f9f9;
+            margin: 20px auto;
+        }
+        svg {
+            width: 100%;
+            height: 100%;
+        }
+        .button-container {
+            margin-top: 10px;
+        }
+        .control-point {
+            fill: red;
+            cursor: pointer;
+        }        
+        .control-polygon {
+            stroke: red;
+            stroke-width: 1;
+            fill: none;
+        }
+        button {
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h3>Interactive Path and Point Cloud Generator</h3>
+
+        <div>
+            <input type="file" id="imageLoader" accept="image/*">
+        </div>
+
+        <div class="canvas-container">
+            <svg id="canvas"></svg>
+        </div>
+
+        <div class="button-container">
+            <button onclick="deleteAllPoints()">Delete All Points</button>
+            <button onclick="exportData()">Export CSV</button>
+        </div>
+
+    </div>
+
+    <script src="js/script-system-H.js"> </script>
+</body>
+</html>

@@ -7,27 +7,39 @@
     <script src="js/d3.v6.min.js"></script>
     <style>
         body {
+            font-family: Arial, sans-serif;
+            margin: 0; /* Remove any default margin */
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            justify-content: center; /* Centers the whole container */
+            align-items: center; /* Ensures everything inside is aligned */
+            min-height: 100vh; /* Ensures full viewport height */
         }
         .container {
             text-align: center;
+            display: flex;
+            flex-direction: column; /* Stack elements vertically */
+            align-items: center; /* Center each element horizontally */
+            justify-content: center; /* Ensures content is centered vertically */
+            gap: 10px; /* Consistent spacing */
         }
         #instructions {
             margin-top: 10px;
             margin-bottom: 10px;
         }
         .canvas-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
             border: 1px solid black;
             width: 600px;
             height: 400px;
-            position: relative;
             background-color: #f9f9f9;
+            
         }
         svg {
             width: 100%;
             height: 100%;
+            display: block; /* Removes unwanted gaps */
         }
         .button-container {
             margin-top: 10px;
@@ -70,7 +82,7 @@
         </div>
 
         <h4>Explanation</h4>
-        <textarea id="explanationArea" rows="15" cols="80" readonly></textarea>
+        <textarea id="explanationArea" rows="50" cols="100" readonly></textarea>
     </div>
 
     <script src="js/script-system-D.js"> </script>
